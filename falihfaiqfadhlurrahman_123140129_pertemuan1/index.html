@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini POS - Kasir Kampus</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Mini POS - Kantin Kampus</h1>
+            <p id="store-announcement">Memuat informasi toko...</p> <!-- Tempat implementasi Fetch API -->
+        </header>
+
+        <div class="main-content">
+            <!-- Form Input Barang -->
+            <section class="form-section">
+                <h2>Tambah Barang</h2>
+                <form id="form-barang">
+                    <div class="input-group">
+                        <label for="namaBarang">Nama Barang</label>
+                        <input type="text" id="namaBarang" placeholder="Masukkan nama barang">
+                        <small class="error-msg" id="error-nama"></small>
+                    </div>
+                    <div class="input-group">
+                        <label for="hargaSatuan">Harga Satuan (Rp)</label>
+                        <input type="number" id="hargaSatuan" placeholder="Contoh: 1500">
+                        <small class="error-msg" id="error-harga"></small>
+                    </div>
+                    <div class="input-group">
+                        <label for="qty">Jumlah (Qty)</label>
+                        <input type="number" id="qty" placeholder="Minimal 1">
+                        <small class="error-msg" id="error-qty"></small>
+                    </div>
+                    <button type="submit" class="btn-primary">Tambah ke Keranjang</button>
+                </form>
+            </section>
+
+            <!-- Tabel Keranjang Belanja -->
+            <section class="cart-section">
+                <h2>Keranjang Belanja</h2>
+                <table id="cart-table">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama Barang</th>
+                            <th>Harga</th>
+                            <th>Qty</th>
+                            <th>Subtotal</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cart-body">
+                        <!-- Data keranjang akan dirender di sini via JS -->
+                    </tbody>
+                </table>
+                
+                <div class="summary-box">
+                    <p>Total Belanja: <span id="total-belanja">Rp 0</span></p>
+                    <p>Diskon: <span id="diskon">Rp 0</span></p>
+                    <h3>Total Akhir: <span id="total-akhir">Rp 0</span></h3>
+                </div>
+
+                <!-- Modul Pembayaran -->
+                <div class="payment-box">
+                    <div class="input-group">
+                        <label for="uangBayar">Uang Bayar (Rp)</label>
+                        <input type="number" id="uangBayar" placeholder="Masukkan nominal uang">
+                    </div>
+                    <button id="btn-bayar" class="btn-success">Hitung Kembalian</button>
+                    <p id="hasil-kembalian" class="kembalian-msg"></p>
+                </div>
+
+                <button id="btn-reset" class="btn-danger">Transaksi Baru (Reset)</button>
+            </section>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

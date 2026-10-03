@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modul Latihan Praktikum - Pemrograman Web</title>
+    <style>
+        /* ===== STYLES & DARK MODE (Poin 4) ===== */
+        :root {
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --border-color: #dddddd;
+            --primary-color: #007bff;
+        }
+
+        body.dark-mode {
+            --bg-color: #18191a;
+            --card-bg: #242526;
+            --text-color: #e4e6eb;
+            --border-color: #3e4042;
+            --primary-color: #3a86ff;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 15px;
+        }
+
+        .section-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        /* Form & Input */
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 8px 12px;
+            box-sizing: border-box;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background-color: var(--card-bg);
+            color: var(--text-color);
+        }
+
+        .error-msg {
+            color: #ff4d4d;
+            font-size: 0.85em;
+            margin-top: 4px;
+            display: block;
+        }
+
+        /* Tombol */
+        button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            background-color: var(--primary-color);
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover { opacity: 0.9; }
+        button:disabled { background-color: #888; cursor: not-allowed; }
+
+        .btn-toggle {
+            background-color: #6c757d;
+        }
+
+        /* Tabel Data Mahasiswa */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            text-align: left;
+        }
+
+        th { background-color: rgba(0,0,0,0.05); }
+
+        /* Todo List (Poin 6) */
+        .todo-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            margin-top: 8px;
+            border-radius: 4px;
+        }
+
+        .todo-item.completed span {
+            text-decoration: line-through;
+            opacity: 0.6;
+        }
+
+        .btn-delete { background-color: #dc3545; }
+
+        /* API Post Cards & Pagination (Poin 3 & 5) */
+        .post-card {
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+
+        .pagination-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Modul Latihan Praktikum</h1>
+            <!-- POIN 4: Dark Mode Toggle -->
+            <button id="btnDarkMode" class="btn-toggle">🌙 Dark Mode</button>
+        </header>
+
+        <!-- POIN 1 & 2: Form Mahasiswa + LocalStorage -->
+        <section class="section-card">
+            <h2>1. Form Data Mahasiswa Baru</h2>
+            <form id="formMhs">
+                <div class="input-group">
+                    <label for="nim">NIM</label>
+                    <input type="text" id="nim" placeholder="Masukkan NIM (min 5 angka)">
+                    <small class="error-msg" id="errNim"></small>
+                </div>
+                <div class="input-group">
+                    <label for="nama">Nama Lengkap</label>
+                    <input type="text" id="nama" placeholder="Masukkan Nama (min 3 karakter)">
+                    <small class="error-msg" id="errNama"></small>
+                </div>
+                <button type="submit">Tambah Mahasiswa</button>
+            </form>
+
+            <h3>Daftar Mahasiswa (Tersimpan di LocalStorage)</h3>
+            <table>
+                <thead>
+                    <tr><th>NIM</th><th>Nama Mahasiswa</th></tr>
+                </thead>
+                <tbody id="bodyMhs"></tbody>
+            </table>
+        </section>
+
+        <!-- POIN 6: Todo List Sederhana + LocalStorage -->
+        <section class="section-card">
+            <h2>2. Aplikasi Todo List</h2>
+            <div style="display: flex; gap: 10px;">
+                <input type="text" id="todoInput" placeholder="Tambah tugas baru...">
+                <button id="btnAddTodo">Tambah</button>
+            </div>
+            <div id="todoContainer" style="margin-top: 15px;"></div>
+        </section>
+
+        <!-- POIN 3 & 5: Fetch API, Filter Search, dan Pagination -->
+        <section class="section-card">
+            <h2>3. Daftar Post (API, Filter & Pagination)</h2>
+            <div class="input-group">
+                <input type="text" id="searchPost" placeholder="🔍 Cari judul post...">
+            </div>
+
+            <div id="postsList">Memuat data dari API...</div>
+
+            <div class="pagination-controls">
+                <button id="btnPrev">← Previous</button>
+                <span id="pageInfo">Halaman 1</span>
+                <button id="btnNext">Next →</button>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // ========================================================
+        // POIN 4: DARK MODE TOGGLE (Class Manipulation)
+        // ========================================================
+        const btnDarkMode = document.getElementById('btnDarkMode');
+        btnDarkMode.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            btnDarkMode.textContent = isDark ? '☀️ Light Mode' : '🌙 Dark Mode';
+        });
+
+        // ========================================================
+        // POIN 1 & 2: FORM MAHASISWA & LOCALSTORAGE
+        // ========================================================
+        let dataMhs = JSON.parse(localStorage.getItem('dataMahasiswa')) || [];
+
+        function renderMhs() {
+            const tbody = document.getElementById('bodyMhs');
+            tbody.innerHTML = '';
+            dataMhs.forEach(mhs => {
+                tbody.innerHTML += `<tr><td>${mhs.nim}</td><td>${mhs.nama}</td></tr>`;
+            });
+            localStorage.setItem('dataMahasiswa', JSON.stringify(dataMhs));
+        }
+
+        document.getElementById('formMhs').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const nimVal = document.getElementById('nim').value.trim();
+            const namaVal = document.getElementById('nama').value.trim();
+            let isValid = true;
+
+            // Validasi NIM
+            if (nimVal.length < 5 || isNaN(nimVal)) {
+                document.getElementById('errNim').textContent = 'NIM wajib angka & minimal 5 digit!';
+                isValid = false;
+            } else {
+                document.getElementById('errNim').textContent = '';
+            }
+
+            // Validasi Nama
+            if (namaVal.length < 3) {
+                document.getElementById('errNama').textContent = 'Nama minimal 3 karakter!';
+                isValid = false;
+            } else {
+                document.getElementById('errNama').textContent = '';
+            }
+
+            if (isValid) {
+                dataMhs.push({ nim: nimVal, nama: namaVal });
+                renderMhs();
+                this.reset();
+            }
+        });
+
+        // ========================================================
+        // POIN 6: TODO LIST (DOM Manipulation & LocalStorage)
+        // ========================================================
+        let todos = JSON.parse(localStorage.getItem('myTodos')) || [];
+
+        function renderTodos() {
+            const container = document.getElementById('todoContainer');
+            container.innerHTML = '';
+            todos.forEach((todo, index) => {
+                const item = document.createElement('div');
+                item.className = `todo-item ${todo.done ? 'completed' : ''}`;
+                item.innerHTML = `
+                    <span style="cursor:pointer;" onclick="toggleTodo(${index})">
+                        ${todo.done ? '✅' : '📌'} ${todo.text}
+                    </span>
+                    <button class="btn-delete" onclick="deleteTodo(${index})">Hapus</button>
+                `;
+                container.appendChild(item);
+            });
+            localStorage.setItem('myTodos', JSON.stringify(todos));
+        }
+
+        document.getElementById('btnAddTodo').addEventListener('click', () => {
+            const input = document.getElementById('todoInput');
+            if (input.value.trim() !== '') {
+                todos.push({ text: input.value.trim(), done: false });
+                input.value = '';
+                renderTodos();
+            }
+        });
+
+        function toggleTodo(index) {
+            todos[index].done = !todos[index].done;
+            renderTodos();
+        }
+
+        function deleteTodo(index) {
+            todos.splice(index, 1);
+            renderTodos();
+        }
+
+        // ========================================================
+        // POIN 3 & 5: FETCH API, SEARCH FILTER, & PAGINATION
+        // ========================================================
+        let allPosts = [];
+        let filteredPosts = [];
+        let currentPage = 1;
+        const postsPerPage = 4;
+
+        async function fetchPosts() {
+            try {
+                const res = await fetch('https://jsonplaceholder.typicode.com/posts');
+                allPosts = await res.json();
+                filteredPosts = allPosts;
+                renderPosts();
+            } catch (err) {
+                document.getElementById('postsList').textContent = 'Gagal memuat data dari API.';
+            }
+        }
+
+        function renderPosts() {
+            const postsList = document.getElementById('postsList');
+            postsList.innerHTML = '';
+
+            // Hitung Indeks Pagination
+            const start = (currentPage - 1) * postsPerPage;
+            const end = start + postsPerPage;
+            const paginatedData = filteredPosts.slice(start, end);
+
+            if (paginatedData.length === 0) {
+                postsList.innerHTML = '<p>Judul post tidak ditemukan.</p>';
+            } else {
+                paginatedData.forEach(post => {
+                    postsList.innerHTML += `
+                        <div class="post-card">
+                            <h4 style="margin: 0 0 5px 0;">${post.title}</h4>
+                            <p style="margin: 0; font-size: 0.9em; opacity: 0.8;">${post.body}</p>
+                        </div>
+                    `;
+                });
+            }
+
+            // Update Info Halaman & Status Tombol
+            const totalPages = Math.ceil(filteredPosts.length / postsPerPage) || 1;
+            document.getElementById('pageInfo').textContent = `Halaman ${currentPage} dari ${totalPages}`;
+            document.getElementById('btnPrev').disabled = currentPage === 1;
+            document.getElementById('btnNext').disabled = currentPage >= totalPages;
+        }
+
+        // Filter Pencarian Title
+        document.getElementById('searchPost').addEventListener('input', (e) => {
+            const keyword = e.target.value.toLowerCase();
+            filteredPosts = allPosts.filter(post => post.title.toLowerCase().includes(keyword));
+            currentPage = 1; // Kembali ke hal 1 saat filter dipanggil
+            renderPosts();
+        });
+
+        // Kontrol Pagination
+        document.getElementById('btnPrev').addEventListener('click', () => {
+            if (currentPage > 1) { currentPage--; renderPosts(); }
+        });
+        document.getElementById('btnNext').addEventListener('click', () => {
+            const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
+            if (currentPage < totalPages) { currentPage++; renderPosts(); }
+        });
+
+        // Inisialisasi Awal
+        renderMhs();
+        renderTodos();
+        fetchPosts();
+    </script>
+</body>
+</html>
