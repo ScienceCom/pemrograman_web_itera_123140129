@@ -3,7 +3,7 @@
 **Identitas:**
 - **Nama Lengkap:** Falih Faiq Fadhlurrahman
 - **NIM:** 123140129
-- **Kelas Praktikum:** Pemrograman Aplikasi Web RB
+- **Kelas Praktikum:** Pengembangan Aplikasi Website RB
 
 ---
 
