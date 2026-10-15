@@ -49,3 +49,7 @@ Digunakan secara ekstensif pada *method* di dalam Class agar konteks `this` teta
 ### 7. Spread Operator (`...`) & Immutability (*Nilai Plus*)
 - **Baris 68:** `this.tasks = [...this.tasks, newTask];` -> Menyisipkan data baru tanpa memutasi array asli (menggantikan `.push()`).
 - **Baris 82 & 90:** `{ ...task, title: newTitle.trim() }` -> Memperbarui *state* objek pada fitur *Edit* dan *Toggle Completed* menggunakan teknik duplikasi dengan spread operator.
+
+---
+### Screenshot Aplikasi:
+<img src="pert2.png" width="800" />
