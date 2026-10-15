@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Latihan 2 - Exponential Backoff Retry</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        .log-box { background: #333; color: #0f0; padding: 15px; border-radius: 5px; min-height: 150px; font-family: monospace;}
+    </style>
+</head>
+<body>
+    <h2>Mekanisme Retry (Exponential Backoff)</h2>
+    <p>Simulasi API yang gagal 2 kali, lalu berhasil di percobaan ke-3.</p>
+    <button id="btnRetry">Mulai Simulasi Fetch</button>
+    
+    <div class="log-box" id="logBox">Sistem siap...</div>
+
+    <script>
+        const logBox = document.getElementById('logBox');
+        function addLog(text) { logBox.innerHTML += `<div>${text}</div>`; }
+
+        // Fungsi fetch buatan untuk simulasi gagal 2x lalu berhasil
+        let errorCount = 0;
+        const mockFetch = async () => {
+            errorCount++;
+            if (errorCount < 3) throw new Error('Koneksi Terputus (Simulasi)');
+            // Percobaan ke-3 baru jalankan API beneran
+            return await fetch('https://jsonplaceholder.typicode.com/users/1').then(res => res.json());
+        };
+
+        // Mekanisme Exponential Backoff Rekursif
+        const fetchWithRetry = async (retries, delay) => {
+            try {
+                addLog(`Mencoba fetch... (Sisa retries: ${retries})`);
+                const data = await mockFetch();
+                addLog(`BERHASIL: ${data.name}`);
+            } catch (error) {
+                if (retries > 0) {
+                    addLog(`Gagal: ${error.message}. Menunggu ${delay}ms...`);
+                    // Delay menggunakan Promise setTimeout
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                    // Panggil ulang dirinya sendiri dengan delay dikali 2
+                    return fetchWithRetry(retries - 1, delay * 2);
+                } else {
+                    addLog(`Batal. Sudah mencoba maksimal batas percobaan.`);
+                }
+            }
+        };
+
+        document.getElementById('btnRetry').addEventListener('click', () => {
+            logBox.innerHTML = ''; // Reset log
+            errorCount = 0; // Reset simulasi
+            fetchWithRetry(3, 500); // Max 3x coba, mulai delay 500ms
+        });
+    </script>
+</body>
+</html>

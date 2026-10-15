@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Latihan 3 - Pagination & Debounce Search</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        .controls { margin-bottom: 20px; }
+        .controls input { padding: 8px; width: 250px; }
+        .user-card { border: 1px solid #ccc; padding: 10px; margin-bottom: 5px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h2>Pagination & Debounce Search API</h2>
+    
+    <div class="controls">
+        <!-- Latihan 6: Input Pencarian Debounce -->
+        <input type="text" id="searchInput" placeholder="Cari nama (Ketik perlahan)...">
+        
+        <!-- Latihan 5: Tombol Pagination -->
+        <button id="btnPrev">Prev</button>
+        <span id="pageInfo"> Hal 1 </span>
+        <button id="btnNext">Next</button>
+    </div>
+
+    <div id="loading" style="display:none;">Memuat data...</div>
+    <div id="dataContainer"></div>
+
+    <script>
+        let currentPage = 1;
+        const limit = 3;
+        let searchQuery = '';
+
+        // Fungsi Debounce: Menunda eksekusi fungsi sampai user berhenti mengetik
+        const debounce = (func, delay) => {
+            let timer;
+            return (...args) => {
+                clearTimeout(timer);
+                timer = setTimeout(() => { func.apply(this, args); }, delay);
+            };
+        };
+
+        // Fungsi fetch data dengan Async/Await
+        const fetchUsers = async () => {
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('dataContainer').innerHTML = '';
+            
+            try {
+                let url = `https://jsonplaceholder.typicode.com/users?_page=${currentPage}&_limit=${limit}`;
+                if (searchQuery) url += `&q=${encodeURIComponent(searchQuery)}`;
+
+                const res = await fetch(url);
+                const data = await res.json();
+
+                const container = document.getElementById('dataContainer');
+                if (data.length === 0) {
+                    container.innerHTML = '<p>Tidak ada data ditemukan/Halaman habis.</p>';
+                    document.getElementById('btnNext').disabled = true;
+                } else {
+                    data.forEach(user => {
+                        container.innerHTML += `<div class="user-card"><b>${user.name}</b> - ${user.email}</div>`;
+                    });
+                    // Enable next button asumsikan masih ada data
+                    document.getElementById('btnNext').disabled = data.length < limit;
+                }
+                
+                document.getElementById('pageInfo').innerText = ` Hal ${currentPage} `;
+                document.getElementById('btnPrev').disabled = currentPage === 1;
+
+            } catch (err) {
+                console.error(err);
+            } finally {
+                document.getElementById('loading').style.display = 'none';
+            }
+        };
+
+        // Event Listener Pagination
+        document.getElementById('btnPrev').addEventListener('click', () => {
+            if (currentPage > 1) { currentPage--; fetchUsers(); }
+        });
+        document.getElementById('btnNext').addEventListener('click', () => {
+            currentPage++; fetchUsers();
+        });
+
+        // Event Listener Search (Memanggil API hanya setelah 600ms dari ketikan terakhir)
+        document.getElementById('searchInput').addEventListener('input', debounce((e) => {
+            searchQuery = e.target.value.trim();
+            currentPage = 1; // Kembali ke hal 1 saat pencarian
+            fetchUsers();
+        }, 600));
+
+        // Panggil data pertama kali saat halaman dimuat
+        fetchUsers();
+    </script>
+</body>
+</html>

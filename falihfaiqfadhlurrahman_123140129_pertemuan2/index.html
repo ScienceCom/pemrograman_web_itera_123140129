@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Studi - Falih</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Bagian Header & Cuaca -->
+        <header class="dashboard-header">
+            <div>
+                <h1>Dashboard Studi Falih</h1>
+                <p>Teknik Informatika - Manajemen Tugas & Produktivitas</p>
+            </div>
+            <div class="weather-widget">
+                <span id="weather-icon"></span>
+                <div id="weather-info">Memuat cuaca area kampus...</div>
+            </div>
+        </header>
+
+        <main class="dashboard-main">
+            <!-- Form Input Tugas -->
+            <section class="task-input-section">
+                <h2>Tambah Agenda Baru</h2>
+                <form id="task-form">
+                    <input type="text" id="task-title" placeholder="Contoh: Revisi laporan Web Dev..." required>
+                    <select id="task-category">
+                        <option value="Kuliah">Kuliah</option>
+                        <option value="Praktikum">Praktikum / Lab</option>
+                        <option value="Proyek">Proyek</option>
+                        <option value="Proyek">Tugas</option>
+                        <option value="Lainnya">Lainnya</option>
+                    </select>
+                    <button type="submit" class="btn-primary">Tambah Agenda</button>
+                </form>
+            </section>
+
+            <!-- Daftar Tugas -->
+            <section class="task-list-section">
+                <h2>Daftar Agenda Tersimpan</h2>
+                <div id="task-list" class="task-grid">
+                    <!-- Item dirender secara dinamis lewat app.js -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

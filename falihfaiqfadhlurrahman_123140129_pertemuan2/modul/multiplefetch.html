@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Latihan 1 - Promise.all Multiple Fetch</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        .loader { display: none; color: blue; font-weight: bold; margin-bottom: 10px; }
+        .error { display: none; background: #ffcccc; color: red; padding: 10px; border-radius: 5px; }
+        pre { background: #eee; padding: 10px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h2>Fetch Multiple Endpoints</h2>
+    <button id="btnFetch">Ambil Data (Users & Posts)</button>
+    
+    <!-- Latihan 3 & 4: Loading State & Error Boundary -->
+    <div id="loading" class="loader"> Sedang mengambil data paralel...</div>
+    <div id="error" class="error"></div>
+    
+    <pre id="result">Hasil akan muncul di sini</pre>
+
+    <script>
+        document.getElementById('btnFetch').addEventListener('click', async () => {
+            const loading = document.getElementById('loading');
+            const error = document.getElementById('error');
+            const result = document.getElementById('result');
+
+            // Tampilkan loading, sembunyikan error
+            loading.style.display = 'block';
+            error.style.display = 'none';
+            result.textContent = '';
+
+            try {
+                // Eksekusi API secara bersamaan
+                const [usersRes, postsRes] = await Promise.all([
+                    fetch('https://jsonplaceholder.typicode.com/users?_limit=3'),
+                    fetch('https://jsonplaceholder.typicode.com/posts?_limit=3')
+                ]);
+
+                if (!usersRes.ok || !postsRes.ok) throw new Error('Salah satu API gagal dimuat!');
+
+                const users = await usersRes.json();
+                const posts = await postsRes.json();
+
+                // Gabungkan dan tampilkan hasil
+                result.textContent = JSON.stringify({ data_users: users, data_posts: posts }, null, 2);
+            } catch (err) {
+                // Tampilkan Error Boundary
+                error.textContent = 'Terjadi Kesalahan: ' + err.message;
+                error.style.display = 'block';
+            } finally {
+                // Sembunyikan loading
+                loading.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
