@@ -7,10 +7,10 @@
 
 ---
 
-##Deskripsi Aplikasi
+## Deskripsi Aplikasi
 **Aplikasi Manajemen Buku Pribadi** adalah aplikasi antarmuka web berbasis React yang dirancang untuk membantu pengguna mengelola katalog buku pribadi secara efisien. Pengguna dapat mencatat buku yang dimiliki, sedang dibaca, atau yang ingin dibeli di masa mendatang.
 
-###Fitur Utama:
+### Fitur Utama:
 - **Manajemen Data (CRUD):** Menambah buku baru, mengedit data buku, dan menghapus buku dari katalog.
 - **Pencarian & Filter:** Menyaring daftar buku berdasarkan kriteria status (*Beli*, *Baca*, *Milik*) serta pencarian waktu nyata (*real-time*) berdasarkan judul atau nama penulis.
 - **Statistik Otomatis:** Halaman khusus statistik untuk memantau ringkasan total buku berdasarkan kategorinya.
@@ -19,7 +19,7 @@
 
 ---
 
-##Instruksi Instalasi & Cara Menjalankan
+## Instruksi Instalasi & Cara Menjalankan
 
 ### Prasyarat
 - **Node.js** (versi 18.x atau yang lebih baru)
@@ -40,11 +40,11 @@
    ```bash
    npm run lint
 5.Jalankan Unit Testing (Vitest & React Testing Library):
-   npm run lint
+   npm run test
 
 ---
 
-##Fitur React & Teknologi yang Digunakan
+## Fitur React & Teknologi yang Digunakan
 
 * **`useState`** (`BookForm.jsx`, `Home.jsx`)  
   Mengelola *state* lokal seperti nilai input form, teks pencarian (*search term*), dan status filter.
@@ -66,7 +66,7 @@
 
   ---
 
-  ##Screenshot
+  ## Screenshot
 
   Home:
   <img src="1_3.png" width="800" />
