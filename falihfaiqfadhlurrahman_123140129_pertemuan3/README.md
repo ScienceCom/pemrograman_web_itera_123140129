@@ -1,16 +1,51 @@
-# React + Vite
+# Aplikasi Manajemen Buku Pribadi
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+**Identitas:**
+- **Nama Lengkap:** Falih Faiq Fadhlurrahman
+- **NIM:** 123140129
+- **Kelas Praktikum:** Pengembangan Aplikasi Web RB
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+##Deskripsi Aplikasi
+**Aplikasi Manajemen Buku Pribadi** adalah aplikasi antarmuka web berbasis React yang dirancang untuk membantu pengguna mengelola katalog buku pribadi secara efisien. Pengguna dapat mencatat buku yang dimiliki, sedang dibaca, atau yang ingin dibeli di masa mendatang.
 
-## React Compiler
+###Fitur Utama:
+- **Manajemen Data (CRUD):** Menambah buku baru, mengedit data buku, dan menghapus buku dari katalog.
+- **Pencarian & Filter:** Menyaring daftar buku berdasarkan kriteria status (*Beli*, *Baca*, *Milik*) serta pencarian waktu nyata (*real-time*) berdasarkan judul atau nama penulis.
+- **Statistik Otomatis:** Halaman khusus statistik untuk memantau ringkasan total buku berdasarkan kategorinya.
+- **Penyimpanan Persisten:** Seluruh data buku tersimpan secara otomatis di `localStorage` browser sehingga data tidak hilang saat halaman di-refresh.
+- **Validasi Input & Error Handling:** Mencegah pengiriman form kosong dan menampilkan pesan peringatan visual.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the Oxlint configuration
+##Instruksi Instalasi & Cara Menjalankan
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+### Prasyarat
+- **Node.js** (versi 18.x atau yang lebih baru)
+- **npm** (Package Manager)
+
+### Langkah-langkah
+1. Masuk ke Direktori Proyek:
+   ```bash
+   cd falihfaiqfadhlurrahman_123140129_pertemuan3
+
+2. Pasang Seluruh Dependensi:
+   ```bash
+   npm install
+3. Jalankan Server Pengembang (Development Mode):
+   ```bash
+   npm run dev
+4. Jalankan Pengecekan Kode:
+   ```bash
+   npm run lint
+5.Jalankan Unit Testing (Vitest & React Testing Library):
+   npm run lint
+
+---
+
+Fitur / Hooks,Lokasi / File,Penjelasan
+useState,"BookForm.jsx, Home.jsx","Mengelola state lokal seperti nilai input form, teks pencarian (search term), dan status filter."
+useEffect,useLocalStorage.js,Menyinkronkan perubahan state buku ke dalam localStorage secara otomatis setiap kali state berubah.
+Context API,BookContext.jsx,"Menyediakan global state management untuk data buku dan fungsi pembantunya (addBook, editBook, deleteBook) tanpa prop drilling."
+Custom Hooks,useLocalStorage.js,
