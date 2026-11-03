@@ -4,9 +4,11 @@ def jalankan_kalkulator_bmi():
     
     berat_kg = float(input("Masukkan berat badan (kg): "))
     tinggi_m = float(input("Masukkan tinggi badan (m): "))
-    
+
+    # Kalkulasi BMI
     bmi = berat_kg / (tinggi_m * tinggi_m)
-    
+
+    # Penentuan kategori menggunakan if-elif-else
     if bmi < 18.5:
         kategori = "Berat badan kurang"
     elif 18.5 <= bmi < 25:
@@ -15,7 +17,8 @@ def jalankan_kalkulator_bmi():
         kategori = "Berat badan berlebih"
     else:
         kategori = "Obesitas"
-        
+
+    # Mencetak hasil perhitungan dengan 2 angka desimal    
     print("\n--- HASIL ---")
     print(f"Nilai BMI : {bmi:.2f}")
     print(f"Kategori  : {kategori}")

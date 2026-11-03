@@ -11,6 +11,7 @@ def hitung_grade(nilai_akhir: float) -> str:
     else:
         return 'E'
 
+# List 5 dictionary mahasiswa
 data_mahasiswa = [
     {"nama": "Falih", "nim": "123140001", "nilai_uts": 80, "nilai_uas": 85, "nilai_tugas": 75},
     {"nama": "Faiq", "nim": "123140002", "nilai_uts": 65, "nilai_uas": 70, "nilai_tugas": 80},
@@ -29,12 +30,14 @@ for mhs in data_mahasiswa:
     # Perhitungan persentase bobot
     nilai_akhir = (0.30 * mhs["nilai_uts"]) + (0.40 * mhs["nilai_uas"]) + (0.30 * mhs["nilai_tugas"])
     grade = hitung_grade(nilai_akhir)
-    
+
+    # Menyimpan nilai akhir untuk pencarian min/max
     mhs["nilai_akhir"] = nilai_akhir 
     list_nilai_akhir.append(nilai_akhir)
     
     print(f"{mhs['nama']:<10} | {mhs['nim']:<10} | {nilai_akhir:<11.2f} | {grade}")
 
+# Mendeteksi nilai tertinggi dan terendah
 nilai_tertinggi = max(list_nilai_akhir)
 nilai_terendah = min(list_nilai_akhir)
 
