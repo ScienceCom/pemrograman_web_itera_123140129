@@ -1,7 +1,5 @@
 import { render, screen, fireEvent, renderHook } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
-
-// Import komponen menggunakan struktur folder yang diratakan (flattened)
 import BookForm from './components/BookForm';
 import BookFilter from './components/BookFilter';
 import useBookStats from './hooks/useBookStats';
