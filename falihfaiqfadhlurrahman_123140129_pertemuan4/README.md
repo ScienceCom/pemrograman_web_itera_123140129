@@ -4,7 +4,7 @@
 
 **NIM:** 123140129
 
-**Mata Kuliah:** Praktikum Pengembangan Aplikasi Web
+**Kelas:** Pengembangan Aplikasi Web RB
 
 ---
 
