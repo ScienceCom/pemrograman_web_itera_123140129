@@ -47,10 +47,13 @@ python main.py
 ## 3. Screenshot
 
 Soal 1:
+
 <img src="bmi.png" width="800" />
 
 Soal 2:
+
 <img src="nilai.png" width="800" />
 
 Soal 3:
+
 <img src="modul_mtk.png" width="800" />
