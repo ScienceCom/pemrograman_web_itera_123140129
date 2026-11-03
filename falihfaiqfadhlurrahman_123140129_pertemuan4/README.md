@@ -1,7 +1,9 @@
 ## Identitas
 
 **Nama:** Falih Faiq Fadhlurrahman
+
 **NIM:** 123140129
+
 **Mata Kuliah:** Praktikum Pengembangan Aplikasi Web
 
 ---
@@ -27,18 +29,18 @@ Pastikan terminal sudah berada di dalam direktori folder praktikum ini.
 
 1.  Menjalankan Tugas 1 (Kalkulator BMI):
     Ketikan perintah berikut di terminal:
-```bash
+``bash
 python tugas1_bmi.py
 
 2.  Menjalankan Tugas 2 (Data Nilai Mahasiswa):
     Ketikan perintah berikut di terminal:
-```bash
+``bash
 python tugas1_bmi.pypython tugas2_nilai_mahasiswa.py
 
 3.  Menjalankan Tugas 3 (Modul Matematika):
     Ketikan perintah berikut di terminal:
-```bash
-python main.py  '
+``bash
+python main.py
 
 ---
 
