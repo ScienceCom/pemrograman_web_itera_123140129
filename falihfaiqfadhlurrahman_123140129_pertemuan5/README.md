@@ -1,4 +1,4 @@
-# Sistem Manajemen Perpustakaan (Python OOP)
+# Sistem Manajemen Perpustakaan
 
 **Identitas Mahasiswa:**
 - **Nama Lengkap:** Falih Faiq Fadhlurrahman
