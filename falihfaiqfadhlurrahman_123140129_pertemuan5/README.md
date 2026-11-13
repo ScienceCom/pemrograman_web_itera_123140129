@@ -1,6 +1,6 @@
 # Sistem Manajemen Perpustakaan
 
-**Identitas Mahasiswa:**
+**Identitas:**
 - **Nama Lengkap:** Falih Faiq Fadhlurrahman
 - **NIM:** 123140129
 - **Kelas Praktikum:** Pengembangan Aplikasi Web RB
