@@ -59,4 +59,5 @@ Program ini dirancang dengan mematuhi secara ketat keempat pilar utama Pemrogram
 ## Screenshot
 
 - **Hasil Skrip**
+
   <img src="prak_5.png" width="800" />
