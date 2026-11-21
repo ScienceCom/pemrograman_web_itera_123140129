@@ -87,6 +87,8 @@ curl.exe -X DELETE http://localhost:6543/api/matakuliah/4
 ## Dokumentasi Pengujian
 
 * **CRUD Mahasiswa**
+  
   <img src="crud_mahasiswa.png" width="800" />
 * **CRUD Matakuliah**
+  
   <img src="crud_matakuliah.png" width="800" />
